@@ -104,24 +104,42 @@ const Header = () => {
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="absolute top-full left-0 right-0 bg-black border-t border-gray-800 md:hidden">
+        <div className="absolute top-full left-0 right-0 bg-black border-t border-gray-800 md:hidden z-50">
           <nav className="flex flex-col p-4 space-y-4">
-            <button onClick={() => scrollToSection('home')} className="dark-nav-link text-left">
+            <button 
+              onClick={() => scrollToSection('home')} 
+              className={`dark-nav-link text-left ${activeSection === 'home' ? 'active' : ''}`}
+            >
               Home
             </button>
-            <button onClick={() => scrollToSection('about')} className="dark-nav-link text-left">
+            <button 
+              onClick={() => scrollToSection('about')} 
+              className={`dark-nav-link text-left ${activeSection === 'about' ? 'active' : ''}`}
+            >
               About
             </button>
-            <button onClick={() => scrollToSection('services')} className="dark-nav-link text-left">
+            <button 
+              onClick={() => scrollToSection('services')} 
+              className={`dark-nav-link text-left ${activeSection === 'services' ? 'active' : ''}`}
+            >
               Services
             </button>
-            <button onClick={() => scrollToSection('products')} className="dark-nav-link text-left">
+            <button 
+              onClick={() => scrollToSection('products')} 
+              className={`dark-nav-link text-left ${activeSection === 'products' ? 'active' : ''}`}
+            >
               Products
             </button>
-            <button onClick={() => scrollToSection('projects')} className="dark-nav-link text-left">
+            <button 
+              onClick={() => scrollToSection('projects')} 
+              className={`dark-nav-link text-left ${activeSection === 'projects' ? 'active' : ''}`}
+            >
               Projects
             </button>
-            <button onClick={() => scrollToSection('contact')} className="dark-nav-link text-left">
+            <button 
+              onClick={() => scrollToSection('contact')} 
+              className={`dark-nav-link text-left ${activeSection === 'contact' ? 'active' : ''}`}
+            >
               Contact
             </button>
           </nav>
