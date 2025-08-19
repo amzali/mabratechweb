@@ -320,10 +320,11 @@ body {
 /* Selected/Active button states with better contrast */
 .btn-primary.selected,
 .btn-primary:focus {
-  background: #FFFFFF;
+  background: var(--brand-primary);
   color: #000000;
-  outline: 2px solid var(--brand-primary);
+  outline: 2px solid #FFFFFF;
   outline-offset: 2px;
+  font-weight: 600;
 }
 
 .btn-secondary.selected,
@@ -331,6 +332,37 @@ body {
   background: var(--brand-primary);
   color: #000000;
   border-color: var(--brand-primary);
+  font-weight: 600;
+}
+
+/* Tab/Button selection states with high contrast */
+.tab-selected {
+  background: var(--brand-primary) !important;
+  color: #000000 !important;
+  border-color: var(--brand-primary) !important;
+  font-weight: 600 !important;
+}
+
+.tab-selected .lucide-react {
+  color: #000000 !important;
+}
+
+/* Service icons with better visibility */
+.service-icon-container {
+  background: rgba(0, 255, 209, 0.1);
+  border: 1px solid var(--brand-primary);
+}
+
+.service-icon-container:hover {
+  background: var(--brand-primary);
+}
+
+.service-icon-container .lucide-react {
+  color: var(--brand-primary);
+}
+
+.service-icon-container:hover .lucide-react {
+  color: #000000;
 }
 
 /* Color Utility Classes */
