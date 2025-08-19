@@ -56,22 +56,40 @@ const Header = () => {
       
       {/* Desktop Navigation */}
       <nav className="dark-nav hidden md:flex">
-        <button onClick={() => scrollToSection('home')} className="dark-nav-link">
+        <button 
+          onClick={() => scrollToSection('home')} 
+          className={`dark-nav-link ${activeSection === 'home' ? 'active' : ''}`}
+        >
           Home
         </button>
-        <button onClick={() => scrollToSection('about')} className="dark-nav-link">
+        <button 
+          onClick={() => scrollToSection('about')} 
+          className={`dark-nav-link ${activeSection === 'about' ? 'active' : ''}`}
+        >
           About
         </button>
-        <button onClick={() => scrollToSection('services')} className="dark-nav-link">
+        <button 
+          onClick={() => scrollToSection('services')} 
+          className={`dark-nav-link ${activeSection === 'services' ? 'active' : ''}`}
+        >
           Services
         </button>
-        <button onClick={() => scrollToSection('products')} className="dark-nav-link">
+        <button 
+          onClick={() => scrollToSection('products')} 
+          className={`dark-nav-link ${activeSection === 'products' ? 'active' : ''}`}
+        >
           Products
         </button>
-        <button onClick={() => scrollToSection('projects')} className="dark-nav-link">
+        <button 
+          onClick={() => scrollToSection('projects')} 
+          className={`dark-nav-link ${activeSection === 'projects' ? 'active' : ''}`}
+        >
           Projects
         </button>
-        <button onClick={() => scrollToSection('contact')} className="dark-nav-link">
+        <button 
+          onClick={() => scrollToSection('contact')} 
+          className={`dark-nav-link ${activeSection === 'contact' ? 'active' : ''}`}
+        >
           Contact
         </button>
       </nav>
