@@ -1,10 +1,18 @@
 import React, { useState } from "react";
-import { Building, Users, Calculator, ExternalLink, Calendar } from "lucide-react";
+import { Building, Users, Calculator, ExternalLink } from "lucide-react";
+import { useProjects } from "../hooks/useApi";
+
+// Icon mapping for dynamic icons
+const iconMap = {
+  Building, Users, Calculator
+};
 
 const ProjectsSection = () => {
   const [selectedProject, setSelectedProject] = useState(0);
+  const { projects, loading, error } = useProjects();
 
-  const projects = [
+  // Fallback projects data
+  const fallbackProjects = [
     {
       id: 1,
       title: "Payroll Application",
@@ -22,7 +30,7 @@ const ProjectsSection = () => {
       duration: "6 months",
       year: "2022",
       status: "Completed",
-      icon: Calculator
+      icon: "Calculator"
     },
     {
       id: 2,
@@ -42,7 +50,7 @@ const ProjectsSection = () => {
       duration: "4 months",
       year: "2021",
       status: "Completed",
-      icon: Users
+      icon: "Users"
     },
     {
       id: 3,
@@ -62,9 +70,15 @@ const ProjectsSection = () => {
       duration: "8 months",
       year: "2023",
       status: "Completed",
-      icon: Building
+      icon: "Building"
     }
   ];
+
+  const displayProjects = projects.length > 0 ? projects : fallbackProjects;
+
+  // Ensure selectedProject index is valid
+  const validSelectedIndex = selectedProject < displayProjects.length ? selectedProject : 0;
+  const currentProject = displayProjects[validSelectedIndex] || displayProjects[0];
 
   const partners = [
     {
@@ -74,10 +88,25 @@ const ProjectsSection = () => {
     },
     {
       name: "PT Sinar Panca Mitra Indonesia",
-      industry: "Trading & Distribution", 
+      industry: "Trading & Distribution",
       description: "Established trading company with extensive distribution network across Indonesia, focusing on industrial supplies and equipment."
     }
   ];
+
+  if (loading) {
+    return (
+      <section id="projects" className="py-32 relative">
+        <div className="dark-content-container">
+          <div className="text-center">
+            <div className="display-large text-white mb-6">Loading Projects...</div>
+            <div className="animate-pulse">
+              <div className="bg-secondary border border-subtle p-12 h-96"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="projects" className="py-32 relative">
@@ -93,103 +122,123 @@ const ProjectsSection = () => {
             Beberapa proyek unggulan yang telah kami selesaikan dengan tingkat kepuasan klien yang tinggi 
             dan implementasi teknologi terdepan.
           </p>
+          
+          {error && (
+            <div className="text-yellow-400 body-small">
+              Using cached projects data (API temporarily unavailable)
+            </div>
+          )}
         </div>
 
         {/* Project Navigation */}
         <div className="flex flex-wrap justify-center gap-4 mb-16">
-          {projects.map((project, index) => (
-            <button
-              key={project.id}
-              onClick={() => setSelectedProject(index)}
-              className={`flex items-center space-x-3 px-6 py-3 border transition-all duration-300 ${
-                selectedProject === index
-                  ? 'bg-brand-hover text-brand-primary border-brand-primary font-semibold'
-                  : 'bg-transparent text-secondary border-subtle hover:border-brand-primary hover:text-brand-primary'
-              }`}
-            >
-              <project.icon className="w-5 h-5" />
-              <span className="button-text">{project.title}</span>
-            </button>
-          ))}
+          {displayProjects.map((project, index) => {
+            const IconComponent = iconMap[project.icon] || Calculator;
+            
+            return (
+              <button
+                key={project.id || index}
+                onClick={() => setSelectedProject(index)}
+                className={`flex items-center space-x-3 px-6 py-3 border transition-all duration-300 ${
+                  validSelectedIndex === index
+                    ? 'bg-brand-hover text-brand-primary border-brand-primary font-semibold'
+                    : 'bg-transparent text-secondary border-subtle hover:border-brand-primary hover:text-brand-primary'
+                }`}
+              >
+                <IconComponent className="w-5 h-5" />
+                <span className="button-text">{project.title}</span>
+              </button>
+            );
+          })}
         </div>
 
         {/* Selected Project Details */}
-        <div className="bg-secondary border border-subtle p-12 mb-20">
-          <div className="grid lg:grid-cols-3 gap-12">
-            {/* Project Info */}
-            <div className="lg:col-span-2 space-y-8">
-              <div className="flex items-start space-x-4">
-                <div className="w-16 h-16 bg-brand-primary flex items-center justify-center">
-                  {React.createElement(projects[selectedProject].icon, {
-                    className: "w-8 h-8 text-black"
-                  })}
+        {currentProject && (
+          <div className="bg-secondary border border-subtle p-12 mb-20">
+            <div className="grid lg:grid-cols-3 gap-12">
+              {/* Project Info */}
+              <div className="lg:col-span-2 space-y-8">
+                <div className="flex items-start space-x-4">
+                  <div className="w-16 h-16 bg-brand-primary flex items-center justify-center">
+                    {React.createElement(iconMap[currentProject.icon] || Calculator, {
+                      className: "w-8 h-8 text-black"
+                    })}
+                  </div>
+                  <div>
+                    <h3 className="heading-2 text-white">{currentProject.title}</h3>
+                    <p className="body-medium text-brand-primary mb-2">{currentProject.client}</p>
+                    <p className="body-small text-muted">{currentProject.category}</p>
+                  </div>
                 </div>
+
+                <p className="body-large text-secondary">
+                  {currentProject.description}
+                </p>
+
+                {/* Key Features */}
                 <div>
-                  <h3 className="heading-2 text-white">{projects[selectedProject].title}</h3>
-                  <p className="body-medium text-brand-primary mb-2">{projects[selectedProject].client}</p>
-                  <p className="body-small text-muted">{projects[selectedProject].category}</p>
+                  <h4 className="heading-3 text-white mb-6">Key Features</h4>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    {currentProject.features?.map((feature, index) => (
+                      <div key={index} className="flex items-center space-x-3 p-4 bg-overlay border border-subtle">
+                        <div className="w-2 h-2 bg-brand-primary flex-shrink-0"></div>
+                        <span className="body-medium text-secondary">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              <p className="body-large text-secondary">
-                {projects[selectedProject].description}
-              </p>
-
-              {/* Key Features */}
-              <div>
-                <h4 className="heading-3 text-white mb-6">Key Features</h4>
-                <div className="grid md:grid-cols-2 gap-4">
-                  {projects[selectedProject].features.map((feature, index) => (
-                    <div key={index} className="flex items-center space-x-3 p-4 bg-overlay border border-subtle">
-                      <div className="w-2 h-2 bg-brand-primary flex-shrink-0"></div>
-                      <span className="body-medium text-secondary">{feature}</span>
+              {/* Project Meta */}
+              <div className="space-y-8">
+                <div className="bg-overlay p-6 border border-subtle">
+                  <h4 className="heading-3 text-white mb-6">Project Details</h4>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <span className="body-medium text-muted">Duration:</span>
+                      <span className="body-medium text-secondary">{currentProject.duration}</span>
                     </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Project Meta */}
-            <div className="space-y-8">
-              <div className="bg-overlay p-6 border border-subtle">
-                <h4 className="heading-3 text-white mb-6">Project Details</h4>
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="body-medium text-muted">Duration:</span>
-                    <span className="body-medium text-secondary">{projects[selectedProject].duration}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="body-medium text-muted">Year:</span>
-                    <span className="body-medium text-secondary">{projects[selectedProject].year}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="body-medium text-muted">Status:</span>
-                    <span className="body-medium text-brand-primary">{projects[selectedProject].status}</span>
+                    <div className="flex justify-between items-center">
+                      <span className="body-medium text-muted">Year:</span>
+                      <span className="body-medium text-secondary">{currentProject.year}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="body-medium text-muted">Status:</span>
+                      <span className="body-medium text-brand-primary">{currentProject.status}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="bg-overlay p-6 border border-subtle">
-                <h4 className="heading-3 text-white mb-6">Technologies</h4>
-                <div className="flex flex-wrap gap-2">
-                  {projects[selectedProject].technologies.map((tech, index) => (
-                    <span 
-                      key={index}
-                      className="px-3 py-1 bg-brand-hover text-brand-primary body-small border border-brand-primary"
-                    >
-                      {tech}
-                    </span>
-                  ))}
+                <div className="bg-overlay p-6 border border-subtle">
+                  <h4 className="heading-3 text-white mb-6">Technologies</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {currentProject.technologies?.map((tech, index) => (
+                      <span 
+                        key={index}
+                        className="px-3 py-1 bg-brand-hover text-brand-primary body-small border border-brand-primary"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              <button className="btn-primary w-full">
-                <span>View Case Study</span>
-                <ExternalLink className="w-5 h-5" />
-              </button>
+                <button 
+                  onClick={() => {
+                    const element = document.getElementById('contact');
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                  className="btn-primary w-full"
+                >
+                  <span>View Case Study</span>
+                  <ExternalLink className="w-5 h-5" />
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Partners Section */}
         <div className="space-y-12">
