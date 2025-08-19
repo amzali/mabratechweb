@@ -3,10 +3,10 @@ from typing import List
 import logging
 from datetime import datetime
 
-from ..models import Contact, ContactCreate, ContactResponse, ContactListResponse
-from ..database import insert_one, find_many, find_one, update_one, count_documents
-from ..utils.email import send_contact_notification
-from ..utils.analytics import track_event
+from models import Contact, ContactCreate, ContactResponse, ContactListResponse
+from database import insert_one, find_many, find_one, update_one, count_documents
+from utils.email import send_contact_notification
+from utils.analytics import track_event
 
 router = APIRouter(prefix="/api/contacts", tags=["contacts"])
 logger = logging.getLogger(__name__)
