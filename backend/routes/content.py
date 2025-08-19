@@ -2,13 +2,13 @@ from fastapi import APIRouter, HTTPException
 from typing import List
 import logging
 
-from ..models import (
+from models import (
     Service, ServiceListResponse, 
     Product, ProductListResponse,
     Project, ProjectListResponse
 )
-from ..database import find_many
-from ..utils.seed_data import get_default_services, get_default_products, get_default_projects
+from database import find_many
+from utils.seed_data import get_default_services, get_default_products, get_default_projects
 
 router = APIRouter(prefix="/api", tags=["content"])
 logger = logging.getLogger(__name__)
