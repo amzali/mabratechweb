@@ -1,0 +1,273 @@
+[
+  {
+    "test": "Health Check",
+    "success": true,
+    "details": "Service is healthy",
+    "timestamp": "2025-08-19T07:02:16.119146",
+    "response_data": {
+      "status": "healthy",
+      "service": "Mabratech API",
+      "version": "1.0.0"
+    }
+  },
+  {
+    "test": "Contact Form - Valid Submission",
+    "success": true,
+    "details": "Contact created successfully",
+    "timestamp": "2025-08-19T07:02:16.698967",
+    "response_data": {
+      "success": true,
+      "message": "Terima kasih! Pesan Anda telah berhasil dikirim. Tim kami akan segera menghubungi Anda.",
+      "id": "14e310e6-cf62-4aeb-8969-508513ba4a33"
+    }
+  },
+  {
+    "test": "Contact Form - Validation",
+    "success": true,
+    "details": "Validation errors caught correctly",
+    "timestamp": "2025-08-19T07:02:17.208570",
+    "response_data": {
+      "detail": [
+        {
+          "type": "string_too_short",
+          "loc": [
+            "body",
+            "name"
+          ],
+          "msg": "String should have at least 1 character",
+          "input": "",
+          "ctx": {
+            "min_length": 1
+          },
+          "url": "https://errors.pydantic.dev/2.11/v/string_too_short"
+        },
+        {
+          "type": "value_error",
+          "loc": [
+            "body",
+            "email"
+          ],
+          "msg": "value is not a valid email address: An email address must have an @-sign.",
+          "input": "invalid-email",
+          "ctx": {
+            "reason": "An email address must have an @-sign."
+          }
+        },
+        {
+          "type": "string_too_short",
+          "loc": [
+            "body",
+            "service"
+          ],
+          "msg": "String should have at least 1 character",
+          "input": "",
+          "ctx": {
+            "min_length": 1
+          },
+          "url": "https://errors.pydantic.dev/2.11/v/string_too_short"
+        },
+        {
+          "type": "string_too_short",
+          "loc": [
+            "body",
+            "message"
+          ],
+          "msg": "String should have at least 10 characters",
+          "input": "Short",
+          "ctx": {
+            "min_length": 10
+          },
+          "url": "https://errors.pydantic.dev/2.11/v/string_too_short"
+        }
+      ]
+    }
+  },
+  {
+    "test": "Get Contacts",
+    "success": true,
+    "details": "Retrieved 1 contacts",
+    "timestamp": "2025-08-19T07:02:17.720945",
+    "response_data": {
+      "total": 1
+    }
+  },
+  {
+    "test": "Contact Stats",
+    "success": true,
+    "details": "Stats retrieved: 1 total submissions",
+    "timestamp": "2025-08-19T07:02:18.231527",
+    "response_data": {
+      "totalSubmissions": 1,
+      "byService": [
+        {
+          "_id": "ERP Systems",
+          "count": 1
+        }
+      ],
+      "byMonth": [
+        {
+          "_id": {
+            "year": 2025,
+            "month": 8
+          },
+          "count": 1
+        }
+      ]
+    }
+  },
+  {
+    "test": "Get Services",
+    "success": true,
+    "details": "Retrieved 6 services with correct structure",
+    "timestamp": "2025-08-19T07:02:18.740106",
+    "response_data": {
+      "total": 6
+    }
+  },
+  {
+    "test": "Get Products",
+    "success": true,
+    "details": "Retrieved 4 products with correct structure",
+    "timestamp": "2025-08-19T07:02:19.249045",
+    "response_data": {
+      "total": 4
+    }
+  },
+  {
+    "test": "Get Projects",
+    "success": true,
+    "details": "Retrieved 3 projects with correct structure",
+    "timestamp": "2025-08-19T07:02:19.757558",
+    "response_data": {
+      "total": 3
+    }
+  },
+  {
+    "test": "Analytics - Page View",
+    "success": true,
+    "details": "Page view tracked successfully",
+    "timestamp": "2025-08-19T07:02:20.266158",
+    "response_data": {
+      "success": true
+    }
+  },
+  {
+    "test": "Analytics - Dashboard",
+    "success": true,
+    "details": "Dashboard data retrieved: 6 page views, 1 contacts",
+    "timestamp": "2025-08-19T07:02:20.779767",
+    "response_data": {
+      "total_page_views": 6,
+      "total_contacts": 1,
+      "top_pages": [
+        {
+          "page": "/",
+          "views": 5
+        },
+        {
+          "page": "/services",
+          "views": 1
+        }
+      ],
+      "contacts_by_service": [
+        {
+          "service": "ERP Systems",
+          "count": 1
+        }
+      ],
+      "recent_activity": [
+        {
+          "_id": "0833ad56-c284-4159-9315-b7dec59882ca",
+          "type": "page_view",
+          "page": "/services",
+          "user_agent": "Python/3.11 aiohttp/3.12.15",
+          "ip_address": "10.64.152.49",
+          "metadata": {
+            "referrer": "https://google.com",
+            "user_type": "visitor"
+          },
+          "timestamp": "2025-08-19T07:02:20.262000"
+        },
+        {
+          "_id": "50ffa8dd-1f77-4897-b429-9ad35d9e0575",
+          "type": "contact_form",
+          "page": "contact",
+          "user_agent": "Python/3.11 aiohttp/3.12.15",
+          "ip_address": "10.64.194.239",
+          "metadata": {
+            "service": "ERP Systems",
+            "company": "PT Teknologi Maju Bersama"
+          },
+          "timestamp": "2025-08-19T07:02:16.697000"
+        },
+        {
+          "_id": "4f4b5f12-f300-48aa-acc3-d2d5af162267",
+          "type": "page_view",
+          "page": "/",
+          "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/139.0.7258.5 Safari/537.36",
+          "ip_address": "10.64.194.239",
+          "metadata": {
+            "title": "Emergent | Fullstack App",
+            "referrer": ""
+          },
+          "timestamp": "2025-08-19T06:59:22.754000"
+        },
+        {
+          "_id": "8fff9e5b-3f2e-4fc3-9dba-6be4072b0231",
+          "type": "page_view",
+          "page": "/",
+          "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/139.0.7258.5 Safari/537.36",
+          "ip_address": "10.64.194.239",
+          "metadata": {
+            "title": "Emergent | Fullstack App",
+            "referrer": ""
+          },
+          "timestamp": "2025-08-19T06:59:22.754000"
+        },
+        {
+          "_id": "c1a55717-b280-4f4c-9ba1-e0951c26a3dd",
+          "type": "page_view",
+          "page": "/",
+          "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
+          "ip_address": "10.64.174.216",
+          "metadata": {
+            "title": "Emergent | Fullstack App",
+            "referrer": "https://app.emergent.sh/"
+          },
+          "timestamp": "2025-08-19T06:59:12.153000"
+        },
+        {
+          "_id": "a8aae163-7213-4761-b045-7100b9ec864b",
+          "type": "page_view",
+          "page": "/",
+          "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
+          "ip_address": "10.64.154.223",
+          "metadata": {
+            "title": "Emergent | Fullstack App",
+            "referrer": "https://app.emergent.sh/"
+          },
+          "timestamp": "2025-08-19T06:59:11.485000"
+        },
+        {
+          "_id": "7d2f5b3b-31d3-47fa-92ed-dac07e2178d5",
+          "type": "page_view",
+          "page": "/",
+          "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
+          "ip_address": "10.64.150.40",
+          "metadata": {
+            "title": "Emergent | Fullstack App",
+            "referrer": "https://app.emergent.sh/"
+          },
+          "timestamp": "2025-08-19T06:59:10.748000"
+        }
+      ]
+    }
+  },
+  {
+    "test": "Error Handling - Invalid Endpoint",
+    "success": true,
+    "details": "404 returned for invalid endpoint",
+    "timestamp": "2025-08-19T07:02:21.286396",
+    "response_data": null
+  }
+]
