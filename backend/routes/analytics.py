@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 import logging
 
 from ..models import AnalyticsEvent, AnalyticsEventCreate, AnalyticsStats
-from ..database import insert_one, aggregate, count_documents
+from ..database import insert_one, aggregate, count_documents, find_many
 from ..utils.analytics import track_event
 
 router = APIRouter(prefix="/api/analytics", tags=["analytics"])
