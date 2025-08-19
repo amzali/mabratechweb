@@ -117,7 +117,7 @@ async def get_contact_stats():
             {"$sort": {"count": -1}}
         ]
         
-        from ..database import aggregate
+        from database import aggregate
         by_service = await aggregate("contacts", service_pipeline)
         
         # Submissions by month (last 6 months)
