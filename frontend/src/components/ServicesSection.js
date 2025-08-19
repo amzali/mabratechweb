@@ -65,8 +65,8 @@ const ServicesSection = () => {
               className="bg-secondary border border-subtle p-8 dark-hover group cursor-pointer"
             >
               {/* Service Icon */}
-              <div className="w-16 h-16 bg-brand-primary mb-6 flex items-center justify-center group-hover:bg-white transition-colors duration-300">
-                <service.icon className="w-8 h-8 text-black" />
+              <div className="w-16 h-16 bg-overlay border border-brand-primary mb-6 flex items-center justify-center group-hover:bg-brand-primary transition-colors duration-300">
+                <service.icon className="w-8 h-8 text-brand-primary group-hover:text-black" />
               </div>
 
               {/* Service Content */}
