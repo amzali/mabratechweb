@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { MapPin, Phone, Mail, Clock, Send, MessageCircle } from "lucide-react";
+import { useContactForm } from "../hooks/useApi";
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -11,22 +12,27 @@ const ContactSection = () => {
     message: ''
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { submitContact, submitting, submitResult, clearResult } = useContactForm();
 
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
+    
+    // Clear previous result when user starts typing
+    if (submitResult) {
+      clearResult();
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
     
-    // Simulate form submission
-    setTimeout(() => {
-      alert('Terima kasih! Pesan Anda telah berhasil dikirim. Tim kami akan segera menghubungi Anda.');
+    try {
+      await submitContact(formData);
+      
+      // Reset form on success
       setFormData({
         name: '',
         email: '',
@@ -35,8 +41,10 @@ const ContactSection = () => {
         service: '',
         message: ''
       });
-      setIsSubmitting(false);
-    }, 2000);
+    } catch (error) {
+      // Error is handled by the hook
+      console.error('Form submission error:', error);
+    }
   };
 
   const contactInfo = [
@@ -123,14 +131,22 @@ const ContactSection = () => {
             <div className="space-y-4">
               <h4 className="heading-3 text-white">Quick Actions</h4>
               <div className="flex flex-wrap gap-4">
-                <button className="btn-secondary flex items-center space-x-2">
+                <a 
+                  href="tel:+622220668716"
+                  className="btn-secondary flex items-center space-x-2"
+                >
                   <Phone className="w-5 h-5" />
                   <span>Call Now</span>
-                </button>
-                <button className="btn-secondary flex items-center space-x-2">
+                </a>
+                <a 
+                  href="https://wa.me/622220668716"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-secondary flex items-center space-x-2"
+                >
                   <MessageCircle className="w-5 h-5" />
                   <span>WhatsApp</span>
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -138,6 +154,17 @@ const ContactSection = () => {
           {/* Contact Form */}
           <div className="bg-secondary border border-subtle p-12">
             <h3 className="heading-2 text-white mb-8">Send us a Message</h3>
+            
+            {/* Success/Error Message */}
+            {submitResult && (
+              <div className={`p-4 border mb-6 ${
+                submitResult.success 
+                  ? 'bg-green-900/20 border-green-500 text-green-400' 
+                  : 'bg-red-900/20 border-red-500 text-red-400'
+              }`}>
+                {submitResult.message}
+              </div>
+            )}
             
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
@@ -149,7 +176,8 @@ const ContactSection = () => {
                     value={formData.name}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 bg-primary border border-subtle text-white placeholder-muted focus:border-brand-primary focus:outline-none transition-colors"
+                    disabled={submitting}
+                    className="w-full px-4 py-3 bg-primary border border-subtle text-white placeholder-muted focus:border-brand-primary focus:outline-none transition-colors disabled:opacity-50"
                     placeholder="Your full name"
                   />
                 </div>
@@ -161,7 +189,8 @@ const ContactSection = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 bg-primary border border-subtle text-white placeholder-muted focus:border-brand-primary focus:outline-none transition-colors"
+                    disabled={submitting}
+                    className="w-full px-4 py-3 bg-primary border border-subtle text-white placeholder-muted focus:border-brand-primary focus:outline-none transition-colors disabled:opacity-50"
                     placeholder="your@email.com"
                   />
                 </div>
@@ -175,7 +204,8 @@ const ContactSection = () => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-primary border border-subtle text-white placeholder-muted focus:border-brand-primary focus:outline-none transition-colors"
+                    disabled={submitting}
+                    className="w-full px-4 py-3 bg-primary border border-subtle text-white placeholder-muted focus:border-brand-primary focus:outline-none transition-colors disabled:opacity-50"
                     placeholder="Your phone number"
                   />
                 </div>
@@ -186,7 +216,8 @@ const ContactSection = () => {
                     name="company"
                     value={formData.company}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-primary border border-subtle text-white placeholder-muted focus:border-brand-primary focus:outline-none transition-colors"
+                    disabled={submitting}
+                    className="w-full px-4 py-3 bg-primary border border-subtle text-white placeholder-muted focus:border-brand-primary focus:outline-none transition-colors disabled:opacity-50"
                     placeholder="Your company name"
                   />
                 </div>
@@ -199,7 +230,8 @@ const ContactSection = () => {
                   value={formData.service}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-4 py-3 bg-primary border border-subtle text-white focus:border-brand-primary focus:outline-none transition-colors"
+                  disabled={submitting}
+                  className="w-full px-4 py-3 bg-primary border border-subtle text-white focus:border-brand-primary focus:outline-none transition-colors disabled:opacity-50"
                 >
                   <option value="">Select a service</option>
                   {services.map((service, index) => (
@@ -215,18 +247,19 @@ const ContactSection = () => {
                   value={formData.message}
                   onChange={handleInputChange}
                   required
+                  disabled={submitting}
                   rows={6}
-                  className="w-full px-4 py-3 bg-primary border border-subtle text-white placeholder-muted focus:border-brand-primary focus:outline-none transition-colors resize-vertical"
+                  className="w-full px-4 py-3 bg-primary border border-subtle text-white placeholder-muted focus:border-brand-primary focus:outline-none transition-colors resize-vertical disabled:opacity-50"
                   placeholder="Tell us about your project requirements..."
                 ></textarea>
               </div>
 
               <button
                 type="submit"
-                disabled={isSubmitting}
-                className="btn-primary w-full group"
+                disabled={submitting}
+                className={`btn-primary w-full group ${submitting ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
-                {isSubmitting ? (
+                {submitting ? (
                   <span>Sending...</span>
                 ) : (
                   <>
