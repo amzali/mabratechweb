@@ -94,10 +94,18 @@ body {
 }
 
 .company-logo {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
   color: var(--brand-primary);
-  letter-spacing: 2px;
+  letter-spacing: 1px;
+}
+
+.company-tagline {
+  font-size: 10px;
+  font-weight: 400;
+  color: #9CA3AF;
+  letter-spacing: 0.5px;
+  margin-top: -2px;
 }
 
 .dark-nav {
@@ -111,19 +119,37 @@ body {
   text-decoration: none;
   font-size: 16px;
   font-weight: 400;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 8px 0;
+  padding: 8px 16px;
+  border-radius: 4px;
+  position: relative;
 }
 
 .dark-nav-link:hover {
-  color: var(--text-primary);
+  color: var(--brand-primary);
+  background: var(--brand-hover);
 }
 
 .dark-nav-link.active {
-  color: var(--brand-active);
+  color: var(--brand-primary);
+  background: var(--brand-hover);
+  font-weight: 500;
+}
+
+/* Active state indicator */
+.dark-nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background: var(--brand-primary);
+  border-radius: 50%;
 }
 
 /* Typography System - High Contrast Dark Theme */
