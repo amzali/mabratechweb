@@ -15,8 +15,16 @@ const Header = () => {
   return (
     <header className="dark-header">
       <div className="flex items-center">
-        <div className="dark-logo-container">
-          <h1 className="company-logo">MABRATECH</h1>
+        <div className="flex items-center space-x-3">
+          <img 
+            src="https://customer-assets.emergentagent.com/job_tech-innovators-10/artifacts/xoh4wss1_logo_only_edited.png" 
+            alt="Mabra Technology Solutions Logo" 
+            className="h-10 w-10 object-contain"
+          />
+          <div className="flex flex-col">
+            <h1 className="company-logo text-xl font-bold">MABRATECH</h1>
+            <span className="company-tagline text-xs text-gray-400">Technology Solutions</span>
+          </div>
         </div>
       </div>
       
