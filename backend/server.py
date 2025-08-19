@@ -7,12 +7,12 @@ from pathlib import Path
 from contextlib import asynccontextmanager
 
 # Import database connection
-from .database import connect_to_mongo, close_mongo_connection
+from database import connect_to_mongo, close_mongo_connection
 
 # Import routes
-from .routes.contacts import router as contacts_router
-from .routes.content import router as content_router
-from .routes.analytics import router as analytics_router
+from routes.contacts import router as contacts_router
+from routes.content import router as content_router
+from routes.analytics import router as analytics_router
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
