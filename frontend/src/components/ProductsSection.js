@@ -96,7 +96,7 @@ const ProductsSection = () => {
               onClick={() => setSelectedProduct(index)}
               className={`flex items-center space-x-3 px-6 py-3 border transition-all duration-300 ${
                 selectedProduct === index
-                  ? 'bg-brand-primary text-black border-brand-primary font-semibold'
+                  ? 'bg-brand-hover text-brand-primary border-brand-primary font-semibold'
                   : 'bg-transparent text-secondary border-subtle hover:border-brand-primary hover:text-brand-primary'
               }`}
             >
