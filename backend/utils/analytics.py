@@ -2,8 +2,8 @@ from datetime import datetime
 import logging
 from typing import Optional, Dict, Any
 
-from ..database import insert_one
-from ..models import AnalyticsEvent
+from database import insert_one
+from models import AnalyticsEvent
 
 logger = logging.getLogger(__name__)
 
