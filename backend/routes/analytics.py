@@ -2,9 +2,9 @@ from fastapi import APIRouter, HTTPException, Request
 from datetime import datetime, timedelta
 import logging
 
-from ..models import AnalyticsEvent, AnalyticsEventCreate, AnalyticsStats
-from ..database import insert_one, aggregate, count_documents, find_many
-from ..utils.analytics import track_event
+from models import AnalyticsEvent, AnalyticsEventCreate, AnalyticsStats
+from database import insert_one, aggregate, count_documents, find_many
+from utils.analytics import track_event
 
 router = APIRouter(prefix="/api/analytics", tags=["analytics"])
 logger = logging.getLogger(__name__)
